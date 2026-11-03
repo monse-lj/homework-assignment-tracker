@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework Assignment Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+<main class="app-container">
+    <header>
+        <h1>Homework Assignment Tracker</h1>
+        <p>Add and keep track of your upcoming assignments.</p>
+    </header>
+
+    <section class="form-section">
+        <h2>Add an Assignment</h2>
+
+        <form id="assignment-form">
+            <div class="form-group">
+                <label for="assignment-name">Assignment name</label>
+                <input
+                        type="text"
+                        id="assignment-name"
+                        placeholder="Example: Sprint 1 Report"
+                        required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="course-name">Course name</label>
+                <input
+                        type="text"
+                        id="course-name"
+                        placeholder="Example: CS 319"
+                        required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="due-date">Due date</label>
+                <input type="date" id="due-date" required>
+            </div>
+
+            <p id="error-message" role="alert"></p>
+
+            <button type="submit">Add Assignment</button>
+        </form>
+    </section>
+
+    <section class="assignment-section">
+        <h2>Saved Assignments</h2>
+        <p id="empty-message">No assignments saved yet.</p>
+        <ul id="assignment-list"></ul>
+    </section>
+</main>
+</body>
+</html>
