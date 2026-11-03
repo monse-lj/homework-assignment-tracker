@@ -1,0 +1,117 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f3f5f9;
+    color: #1f2937;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+header {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 8px;
+    color: #243b67;
+}
+
+header p {
+    margin-top: 0;
+    color: #64748b;
+}
+
+.form-section,
+.assignment-section {
+    margin-bottom: 24px;
+    padding: 25px;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+    margin-top: 0;
+    color: #243b67;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+input:focus {
+    border-color: #315da8;
+    outline: 2px solid rgba(49, 93, 168, 0.15);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #315da8;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #24497f;
+}
+
+#error-message {
+    min-height: 20px;
+    color: #b91c1c;
+    font-weight: bold;
+}
+
+#assignment-list {
+    padding: 0;
+    list-style: none;
+}
+
+.assignment-card {
+    margin-top: 12px;
+    padding: 16px;
+    border-left: 5px solid #315da8;
+    border-radius: 6px;
+    background-color: #f8fafc;
+}
+
+.assignment-card h3 {
+    margin: 0 0 8px;
+}
+
+.assignment-card p {
+    margin: 5px 0;
+}
+
+#empty-message {
+    color: #64748b;
+}
