@@ -1,3 +1,6 @@
+import { AssignmentService } from "./assignment-service.js";
+import { LocalStorageRepository } from "./storage.js";
+
 const assignmentForm = document.getElementById("assignment-form");
 const assignmentNameInput = document.getElementById("assignment-name");
 const courseNameInput = document.getElementById("course-name");
@@ -6,76 +9,69 @@ const errorMessage = document.getElementById("error-message");
 const assignmentList = document.getElementById("assignment-list");
 const emptyMessage = document.getElementById("empty-message");
 
-let assignments = JSON.parse(localStorage.getItem("assignments")) || [];
-
-function saveAssignments() {
-    localStorage.setItem("assignments", JSON.stringify(assignments));
-}
+const repository = new LocalStorageRepository(window.localStorage);
+const assignmentService = new AssignmentService(repository);
 
 function formatDate(dateString) {
-    const dateParts = dateString.split("-");
-    const year = Number(dateParts[0]);
-    const month = Number(dateParts[1]) - 1;
-    const day = Number(dateParts[2]);
-
-    return new Date(year, month, day).toLocaleDateString();
+    const [year, month, day] = dateString.split("-").map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString();
 }
 
 function displayAssignments() {
+    const assignments = assignmentService.getAssignments();
     assignmentList.innerHTML = "";
+    emptyMessage.style.display = assignments.length === 0 ? "block" : "none";
 
-    if (assignments.length === 0) {
-        emptyMessage.style.display = "block";
-        return;
-    }
-
-    emptyMessage.style.display = "none";
-
-    assignments.forEach(function (assignment) {
+    assignments.forEach((assignment) => {
         const listItem = document.createElement("li");
-        listItem.className = "assignment-card";
+        listItem.className = `assignment-card${assignment.completed ? " completed" : ""}`;
+
+        const details = document.createElement("div");
+        details.className = "assignment-details";
 
         const assignmentTitle = document.createElement("h3");
         assignmentTitle.textContent = assignment.name;
 
         const courseText = document.createElement("p");
-        courseText.textContent = "Course: " + assignment.course;
+        courseText.textContent = `Course: ${assignment.course}`;
 
         const dueDateText = document.createElement("p");
-        dueDateText.textContent = "Due: " + formatDate(assignment.dueDate);
+        dueDateText.textContent = `Due: ${formatDate(assignment.dueDate)}`;
 
-        listItem.appendChild(assignmentTitle);
-        listItem.appendChild(courseText);
-        listItem.appendChild(dueDateText);
+        const statusText = document.createElement("p");
+        statusText.className = "status-text";
+        statusText.textContent = assignment.completed ? "Status: Completed" : "Status: Pending";
+
+        const completeButton = document.createElement("button");
+        completeButton.type = "button";
+        completeButton.className = "complete-button";
+        completeButton.textContent = assignment.completed ? "Mark Pending" : "Mark Complete";
+        completeButton.addEventListener("click", () => {
+            assignmentService.toggleCompleted(assignment.id);
+            displayAssignments();
+        });
+
+        details.append(assignmentTitle, courseText, dueDateText, statusText);
+        listItem.append(details, completeButton);
         assignmentList.appendChild(listItem);
     });
 }
 
-assignmentForm.addEventListener("submit", function (event) {
+assignmentForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const assignmentName = assignmentNameInput.value.trim();
-    const courseName = courseNameInput.value.trim();
-    const dueDate = dueDateInput.value;
-
-    if (assignmentName === "" || courseName === "" || dueDate === "") {
-        errorMessage.textContent =
-            "Please enter an assignment name, course name, and due date.";
-        return;
+    try {
+        assignmentService.addAssignment(
+            assignmentNameInput.value,
+            courseNameInput.value,
+            dueDateInput.value
+        );
+        assignmentForm.reset();
+        errorMessage.textContent = "";
+        displayAssignments();
+    } catch (error) {
+        errorMessage.textContent = error.message;
     }
-
-    const newAssignment = {
-        name: assignmentName,
-        course: courseName,
-        dueDate: dueDate
-    };
-
-    assignments.push(newAssignment);
-    saveAssignments();
-    displayAssignments();
-
-    assignmentForm.reset();
-    errorMessage.textContent = "";
 });
 
 displayAssignments();
