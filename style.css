@@ -144,6 +144,22 @@ button:hover {
     background-color: #166534;
 }
 
+.assignment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.delete-button {
+    width: auto;
+    min-width: 145px;
+    background-color: #b91c1c;
+}
+
+.delete-button:hover {
+    background-color: #991b1b;
+}
+
 .assignment-card {
     display: flex;
     align-items: center;
@@ -156,7 +172,9 @@ button:hover {
         flex-direction: column;
     }
 
-    .complete-button {
+    .assignment-actions,
+    .complete-button,
+    .delete-button {
         width: 100%;
     }
 }

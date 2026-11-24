@@ -45,4 +45,15 @@ export class AssignmentService {
         this.repository.save(assignments);
         return assignment;
     }
+
+    deleteAssignment(id) {
+        const assignments = this.getAssignments();
+        const remainingAssignments = assignments.filter((item) => item.id !== id);
+
+        if (remainingAssignments.length === assignments.length) {
+            throw new Error("Assignment not found.");
+        }
+
+        this.repository.save(remainingAssignments);
+    }
 }
