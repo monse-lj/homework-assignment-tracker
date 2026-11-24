@@ -115,3 +115,48 @@ button:hover {
 #empty-message {
     color: #64748b;
 }
+
+.assignment-details {
+    flex: 1;
+}
+
+.assignment-card.completed {
+    border-left-color: #15803d;
+    background-color: #f0fdf4;
+}
+
+.assignment-card.completed h3 {
+    color: #64748b;
+    text-decoration: line-through;
+}
+
+.status-text {
+    font-weight: bold;
+}
+
+.complete-button {
+    width: auto;
+    min-width: 145px;
+    background-color: #15803d;
+}
+
+.complete-button:hover {
+    background-color: #166534;
+}
+
+.assignment-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+@media (max-width: 600px) {
+    .assignment-card {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .complete-button {
+        width: 100%;
+    }
+}
