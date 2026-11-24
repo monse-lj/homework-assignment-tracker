@@ -2,7 +2,7 @@
 
 ## Project Purpose
 
-Homework Assignment Tracker is a browser-based application that allows students to enter an assignment name, course name, and due date. Valid assignments appear in a saved list and remain available after refreshing the page.
+Homework Assignment Tracker is a browser-based application that helps students save assignments, track whether they are complete, and remove assignments they no longer need. Data remains available after refreshing the page.
 
 ## Author
 
@@ -12,56 +12,78 @@ Monserat Leon
 
 - HTML5
 - CSS3
-- JavaScript
+- JavaScript modules
 - Browser local storage
+- Browser-based automated test runner
 
 ## Prerequisites
 
-A modern web browser such as Google Chrome, Safari, or Firefox
+- A modern web browser such as Google Chrome, Safari, or Firefox
 
 ## Installation
 
-1. Clone or download this repository:
+1. Clone the repository:
 
+   ```bash
    git clone https://github.com/monse-lj/homework-assignment-tracker.git
+   ```
 
-2. Open the `homework-assignment-tracker` folder.
+2. Enter the project folder:
 
-No dependency installation is required.
+   ```bash
+   cd homework-assignment-tracker
+   ```
 
 ## Configuration
 
-No API keys, environment variables, database, or other configuration is required. Assignment data is stored in the browser using local storage.
+No API keys, environment variables, or database are required. Assignment data is stored in the current browser using local storage.
 
 ## Running the Application
 
-1. Open the project folder.
-2. Double-click `index.html`.
+Because the application uses JavaScript modules, run a small local web server from the project folder:
 
-On macOS, the application can also be opened from the project folder with:
+```bash
+python3 -m http.server 8000
+```
 
-open index.html
+Then open [http://localhost:8000](http://localhost:8000) in a browser. Stop the server with `Control+C` in Terminal.
 
-The application will open in the default web browser.
+## Running Automated Tests
 
-## Verifying the Functionality
+1. Start the local server using `python3 -m http.server 8000`.
+2. Open [http://localhost:8000/tests.html](http://localhost:8000/tests.html).
 
-1. Open the application.
-2. Select **Add Assignment** with the fields blank and confirm that a validation message appears.
-3. Enter an assignment name, course name, and due date.
-4. Select **Add Assignment** and confirm that it appears under **Saved Assignments**.
-5. Refresh the page and confirm that the assignment remains visible.
+The automated browser test runner checks completion and deletion logic, including normal and invalid-ID cases. A successful run displays **5 of 5 automated tests passed**.
+
+## Verifying Sprint 2 Functionality
+
+1. Add a valid assignment.
+2. Select **Mark Complete** and confirm its status becomes **Completed**.
+3. Refresh the page and confirm the completed status remains saved.
+4. Select **Mark Pending** and confirm the status changes back.
+5. Select **Delete**, cancel the confirmation, and confirm the assignment remains.
+6. Select **Delete** again, approve the confirmation, and confirm the assignment disappears.
 
 ## Sprint 1 Functionality
 
 - Add an assignment with a name, course, and due date.
 - Reject incomplete submissions with a clear validation message.
-- Display valid assignments in a list.
-- Store assignments using localStorage.
-- Restore saved assignments after refreshing the page.
+- Display and persist valid assignments.
+
+## Sprint 2 Functionality
+
+- Mark assignments complete or pending.
+- Preserve completion status after a refresh.
+- Delete an assignment after confirming the action.
+- Run automated tests for the new business logic.
+
+## SOLID Principles Applied
+
+- **Single Responsibility Principle:** `LocalStorageRepository` handles persistence, `AssignmentService` handles assignment rules, and `script.js` handles the browser interface.
+- **Dependency Inversion Principle:** `AssignmentService` receives a repository through its constructor rather than directly using browser local storage. Tests supply a `FakeRepository` without changing the service.
 
 ## Known Limitations
 
-- Assignments cannot currently be edited, deleted, sorted, or marked complete.
+- Assignments cannot be edited or sorted.
 - Data is stored only in the current browser and device.
 - The application does not include accounts, synchronization, or notifications.

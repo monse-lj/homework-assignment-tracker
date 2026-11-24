@@ -51,8 +51,24 @@ function displayAssignments() {
             displayAssignments();
         });
 
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "delete-button";
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", () => {
+            const confirmed = window.confirm(`Delete "${assignment.name}"?`);
+            if (confirmed) {
+                assignmentService.deleteAssignment(assignment.id);
+                displayAssignments();
+            }
+        });
+
+        const actions = document.createElement("div");
+        actions.className = "assignment-actions";
+        actions.append(completeButton, deleteButton);
+
         details.append(assignmentTitle, courseText, dueDateText, statusText);
-        listItem.append(details, completeButton);
+        listItem.append(details, actions);
         assignmentList.appendChild(listItem);
     });
 }
